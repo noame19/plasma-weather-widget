@@ -219,8 +219,8 @@ PlasmoidItem {
 
     // --- Full (popup) representation ---
     fullRepresentation: ColumnLayout {
-        Layout.preferredWidth: Kirigami.Units.gridUnit * 18
-        Layout.minimumWidth: Kirigami.Units.gridUnit * 16
+        Layout.preferredWidth: Kirigami.Units.gridUnit * 22
+        Layout.minimumWidth: Kirigami.Units.gridUnit * 20
         spacing: Kirigami.Units.largeSpacing
 
         PlasmaComponents.Label {
@@ -377,7 +377,10 @@ PlasmoidItem {
                      && root.weatherData.hourly.time
                      && root.weatherData.hourly.time.length > 0
             Layout.alignment: Qt.AlignHCenter
-            spacing: 0
+            Layout.fillWidth: true
+            Layout.leftMargin: Kirigami.Units.smallSpacing
+            Layout.rightMargin: Kirigami.Units.smallSpacing
+            spacing: Kirigami.Units.smallSpacing
 
             Repeater {
                 model: 6
@@ -392,8 +395,8 @@ PlasmoidItem {
                         var now = new Date()
                         return now.getHours() + 1 + index
                     }
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3.2
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3.2
                     spacing: Kirigami.Units.smallSpacing / 2
 
                     // Hour label (e.g. "3 PM")
@@ -464,19 +467,22 @@ PlasmoidItem {
             Layout.bottomMargin: Kirigami.Units.smallSpacing
         }
 
-        // --- 5-day forecast ---
+        // --- 6-day forecast ---
         RowLayout {
             visible: root.weatherData && root.weatherData.daily
             Layout.alignment: Qt.AlignHCenter
-            spacing: 0
+            Layout.fillWidth: true
+            Layout.leftMargin: Kirigami.Units.smallSpacing
+            Layout.rightMargin: Kirigami.Units.smallSpacing
+            spacing: Kirigami.Units.smallSpacing
 
             Repeater {
                 model: root.weatherData && root.weatherData.daily
                     ? root.weatherData.daily.time.length : 0
 
                 delegate: ColumnLayout {
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3.2
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3.2
                     spacing: Kirigami.Units.smallSpacing / 2
 
                     PlasmaComponents.Label {
