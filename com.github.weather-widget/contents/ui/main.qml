@@ -415,7 +415,7 @@ PlasmoidItem {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         horizontalAlignment: Text.AlignHCenter
-                        opacity: 0.7
+                        opacity: 0.8   // match daily day-name non-today opacity
                     }
 
                     // Animated weather icon — same component as daily uses
@@ -454,7 +454,8 @@ PlasmoidItem {
                                && root.weatherData.hourly.precipitation_probability[hourCol.hourIndex] !== undefined)
                             ? root.weatherData.hourly.precipitation_probability[hourCol.hourIndex] + "%"
                             : ""
-                        font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.85
+                        // Copy daily low-temp font size; opacity 0.5 matches
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         horizontalAlignment: Text.AlignHCenter
