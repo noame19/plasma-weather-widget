@@ -219,8 +219,8 @@ PlasmoidItem {
 
     // --- Full (popup) representation ---
     fullRepresentation: ColumnLayout {
-        Layout.preferredWidth: Kirigami.Units.gridUnit * 22
-        Layout.minimumWidth: Kirigami.Units.gridUnit * 20
+        Layout.preferredWidth: Kirigami.Units.gridUnit * 26
+        Layout.minimumWidth: Kirigami.Units.gridUnit * 24
         spacing: Kirigami.Units.largeSpacing
 
         PlasmaComponents.Label {
@@ -339,13 +339,13 @@ PlasmoidItem {
                     }
                 }
 
-                // Precipitation (umbrella — semantic, always present in Breeze)
+                // Precipitation (custom drawn raindrop — no icon-theme dependency)
                 RowLayout {
                     spacing: Kirigami.Units.smallSpacing
-                    Kirigami.Icon {
-                        source: "umbrella"
+                    RaindropIcon {
                         Layout.preferredWidth: Kirigami.Units.iconSizes.small
                         Layout.preferredHeight: Kirigami.Units.iconSizes.small
+                        iconColor: Kirigami.Theme.textColor
                     }
                     PlasmaComponents.Label {
                         text: (root.weatherData && root.weatherData.current
@@ -397,8 +397,8 @@ PlasmoidItem {
                         var now = new Date()
                         return now.getHours() + 1 + index
                     }
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3.2
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3.2
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3.8
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3.8
                     spacing: Kirigami.Units.smallSpacing / 2
 
                     // Hour label (e.g. "3 PM")
@@ -412,7 +412,9 @@ PlasmoidItem {
                             return Qt.formatTime(t, "h AP")
                         }
                         font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
+                        horizontalAlignment: Text.AlignHCenter
                         opacity: 0.7
                     }
 
@@ -423,11 +425,11 @@ PlasmoidItem {
                                       && root.weatherData.hourly.weather_code[hourCol.hourIndex] !== undefined)
                             ? root.weatherData.hourly.weather_code[hourCol.hourIndex] : 0
                         isDay: root.isDay
-                        // +20% over default smallMedium so the icons read clearly
-                        width: Kirigami.Units.iconSizes.smallMedium * 1.2
-                        height: Kirigami.Units.iconSizes.smallMedium * 1.2
-                        Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium * 1.2
-                        Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium * 1.2
+                        // +50% over default smallMedium (1.2x previous baseline, +30% more)
+                        width: Kirigami.Units.iconSizes.smallMedium * 1.5
+                        height: Kirigami.Units.iconSizes.smallMedium * 1.5
+                        Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium * 1.5
+                        Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium * 1.5
                         Layout.alignment: Qt.AlignHCenter
                     }
 
@@ -440,7 +442,9 @@ PlasmoidItem {
                             : ""
                         font.pointSize: Kirigami.Theme.smallFont.pointSize
                         font.bold: true
+                        Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
+                        horizontalAlignment: Text.AlignHCenter
                     }
 
                     // Rain probability (subtle)
@@ -451,7 +455,9 @@ PlasmoidItem {
                             ? root.weatherData.hourly.precipitation_probability[hourCol.hourIndex] + "%"
                             : ""
                         font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.85
+                        Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
+                        horizontalAlignment: Text.AlignHCenter
                         opacity: 0.5
                     }
                 }
@@ -484,8 +490,8 @@ PlasmoidItem {
                     ? root.weatherData.daily.time.length : 0
 
                 delegate: ColumnLayout {
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3.2
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3.2
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3.8
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3.8
                     spacing: Kirigami.Units.smallSpacing / 2
 
                     PlasmaComponents.Label {
@@ -493,7 +499,9 @@ PlasmoidItem {
                             ? root.dayName(root.weatherData.daily.time[index]) : ""
                         font.pointSize: Kirigami.Theme.smallFont.pointSize
                         font.bold: index === 0
+                        Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
+                        horizontalAlignment: Text.AlignHCenter
                         opacity: index === 0 ? 1.0 : 0.8
                         elide: Text.ElideRight
                     }
@@ -515,14 +523,18 @@ PlasmoidItem {
                             ? Math.round(root.weatherData.daily.temperature_2m_max[index]) + "°" : ""
                         font.pointSize: Kirigami.Theme.smallFont.pointSize
                         font.bold: true
+                        Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
+                        horizontalAlignment: Text.AlignHCenter
                     }
 
                     PlasmaComponents.Label {
                         text: root.weatherData
                             ? Math.round(root.weatherData.daily.temperature_2m_min[index]) + "°" : ""
                         font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
+                        horizontalAlignment: Text.AlignHCenter
                         opacity: 0.5
                     }
                 }
