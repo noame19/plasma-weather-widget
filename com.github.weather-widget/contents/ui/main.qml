@@ -173,8 +173,9 @@ PlasmoidItem {
         var lon = plasmoid.configuration.longitude
         var url = "https://api.open-meteo.com/v1/forecast"
             + "?latitude=" + lat + "&longitude=" + lon
-            + "&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m,apparent_temperature"
-            + "&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset"
+            + "&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m,apparent_temperature,surface_pressure,precipitation"
+            + "&hourly=temperature_2m,weather_code,precipitation_probability"
+            + "&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,precipitation_probability_max"
             + "&forecast_days=5"
             + "&timezone=auto"
         executable.exec("curl -s '" + url + "'")
@@ -301,11 +302,12 @@ PlasmoidItem {
                 opacity: 0.15
             }
 
-            // Wind + humidity
+            // Wind + humidity + pressure + precipitation
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter
-                spacing: Kirigami.Units.gridUnit * 2
+                spacing: Kirigami.Units.gridUnit * 1.5
 
+                // Wind
                 RowLayout {
                     spacing: Kirigami.Units.smallSpacing
                     Kirigami.Icon {
@@ -315,11 +317,12 @@ PlasmoidItem {
                     }
                     PlasmaComponents.Label {
                         text: root.weatherData && root.weatherData.current
-                            ? root.weatherData.current.wind_speed_10m + " km/h" : ""
+                            ? Math.round(root.weatherData.current.wind_speed_10m) + " km/h" : ""
                         opacity: 0.8
                     }
                 }
 
+                // Humidity (rain probability icon — keeps original style)
                 RowLayout {
                     spacing: Kirigami.Units.smallSpacing
                     Kirigami.Icon {
@@ -329,19 +332,136 @@ PlasmoidItem {
                     }
                     PlasmaComponents.Label {
                         text: root.weatherData && root.weatherData.current
-                            ? root.weatherData.current.relative_humidity_2m + "%" : ""
+                            ? Math.round(root.weatherData.current.relative_humidity_2m) + "%" : ""
+                        opacity: 0.8
+                    }
+                }
+
+                // Pressure (barometer)
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+                    Kirigami.Icon {
+                        source: "barometer"
+                        Layout.preferredWidth: Kirigami.Units.iconSizes.small
+                        Layout.preferredHeight: Kirigami.Units.iconSizes.small
+                    }
+                    PlasmaComponents.Label {
+                        text: (root.weatherData && root.weatherData.current
+                              && root.weatherData.current.surface_pressure !== undefined)
+                            ? Math.round(root.weatherData.current.surface_pressure) + " hPa" : ""
+                        opacity: 0.8
+                    }
+                }
+
+                // Precipitation (umbrella icon)
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+                    Kirigami.Icon {
+                        source: "weather-showers-scattered"
+                        Layout.preferredWidth: Kirigami.Units.iconSizes.small
+                        Layout.preferredHeight: Kirigami.Units.iconSizes.small
+                    }
+                    PlasmaComponents.Label {
+                        text: (root.weatherData && root.weatherData.current
+                              && root.weatherData.current.precipitation !== undefined)
+                            ? root.weatherData.current.precipitation.toFixed(1) + " mm" : ""
                         opacity: 0.8
                     }
                 }
             }
         }
 
+        // --- Next 6 hours forecast (reuses same column layout as daily) ---
+        RowLayout {
+            visible: root.weatherData && root.weatherData.hourly
+                     && root.weatherData.hourly.time
+                     && root.weatherData.hourly.time.length > 0
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 0
+
+            Repeater {
+                model: 6
+                delegate: ColumnLayout {
+                    id: hourCol
+                    // index of THIS hour in the hourly.time array.
+                    // Open-Meteo returns hourly starting at 00:00 today in local TZ,
+                    // so next hour's index = currentHour + 1 + Repeater-index.
+                    property int hourIndex: {
+                        if (!root.weatherData || !root.weatherData.hourly
+                            || !root.weatherData.hourly.time) return 0
+                        var now = new Date()
+                        return now.getHours() + 1 + index
+                    }
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 2.6
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 2.6
+                    spacing: Kirigami.Units.smallSpacing / 2
+
+                    // Hour label (e.g. "3 PM")
+                    PlasmaComponents.Label {
+                        text: {
+                            if (!root.weatherData || !root.weatherData.hourly
+                                || !root.weatherData.hourly.time) return ""
+                            var i = hourCol.hourIndex
+                            if (!root.weatherData.hourly.time[i]) return ""
+                            var t = new Date(root.weatherData.hourly.time[i])
+                            return Qt.formatTime(t, "h AP")
+                        }
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        Layout.alignment: Qt.AlignHCenter
+                        opacity: 0.7
+                    }
+
+                    // Animated weather icon — same component as daily uses
+                    AnimatedWeatherIcon {
+                        weatherCode: (root.weatherData && root.weatherData.hourly
+                                      && root.weatherData.hourly.weather_code
+                                      && root.weatherData.hourly.weather_code[hourCol.hourIndex] !== undefined)
+                            ? root.weatherData.hourly.weather_code[hourCol.hourIndex] : 0
+                        isDay: root.isDay
+                        width: Kirigami.Units.iconSizes.smallMedium
+                        height: Kirigami.Units.iconSizes.smallMedium
+                        Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+                        Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+                        Layout.alignment: Qt.AlignHCenter
+                    }
+
+                    // Temperature
+                    PlasmaComponents.Label {
+                        text: (root.weatherData && root.weatherData.hourly
+                               && root.weatherData.hourly.temperature_2m
+                               && root.weatherData.hourly.temperature_2m[hourCol.hourIndex] !== undefined)
+                            ? Math.round(root.weatherData.hourly.temperature_2m[hourCol.hourIndex]) + "°"
+                            : ""
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        font.bold: true
+                        Layout.alignment: Qt.AlignHCenter
+                    }
+
+                    // Rain probability (subtle)
+                    PlasmaComponents.Label {
+                        text: (root.weatherData && root.weatherData.hourly
+                               && root.weatherData.hourly.precipitation_probability
+                               && root.weatherData.hourly.precipitation_probability[hourCol.hourIndex] !== undefined)
+                            ? root.weatherData.hourly.precipitation_probability[hourCol.hourIndex] + "%"
+                            : ""
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.85
+                        Layout.alignment: Qt.AlignHCenter
+                        opacity: 0.5
+                    }
+                }
+            }
+        }
+
         Rectangle {
-            visible: root.weatherData && root.weatherData.daily
+            visible: root.weatherData && root.weatherData.hourly
+                     && root.weatherData.hourly.time
+                     && root.weatherData.hourly.time.length > 0
             Layout.fillWidth: true
             height: 1
             color: Kirigami.Theme.textColor
             opacity: 0.15
+            Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.bottomMargin: Kirigami.Units.smallSpacing
         }
 
         // --- 5-day forecast ---
