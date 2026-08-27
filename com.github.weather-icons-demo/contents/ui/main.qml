@@ -14,72 +14,51 @@ PlasmoidItem {
     }
 
     fullRepresentation: ColumnLayout {
-        Layout.preferredWidth: 1500
-        Layout.minimumWidth: 1200
+        Layout.preferredWidth: 720
+        Layout.minimumWidth: 720
         spacing: 6
-        Layout.margins: 16
+        Layout.margins: 12
 
-        // Header
         PlasmaComponents.Label {
-            text: "Weather Icons — Horizontal Alignment"
+            text: "Icon Alignment — compare visual mass against red line"
             font.bold: true
-            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 1.1
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-        }
-        PlasmaComponents.Label {
-            text: "All distinct icon types in one row. Red line = box center; your eye compares each icon's visual mass to that line."
-            font.pointSize: Kirigami.Theme.smallFont.pointSize
-            opacity: 0.6
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.WordWrap
         }
 
         Rectangle {
             Layout.fillWidth: true
-            Layout.topMargin: 4
-            Layout.bottomMargin: 4
+            Layout.topMargin: 2
+            Layout.bottomMargin: 2
             height: 1
             color: Kirigami.Theme.textColor
             opacity: 0.2
         }
 
-        // The icons — one cell per distinct WMO code/icon
         readonly property var entries: [
-            { code: 0,  isDay: true,  label: "Sun",        vOff: "  0%" },
-            { code: 0,  isDay: false, label: "Moon",       vOff: "  0%" },
-            { code: 1,  isDay: true,  label: "Partly",     vOff: " -8%" },
-            { code: 3,  isDay: true,  label: "Overcast",   vOff: " -6%" },
-            { code: 45, isDay: true,  label: "Fog",        vOff: " +2%" },
-            { code: 61, isDay: true,  label: "Rain",       vOff: "+16%" },
-            { code: 71, isDay: true,  label: "Snow",       vOff: "+16%" },
-            { code: 95, isDay: true,  label: "Storm",      vOff: "+16%" }
+            { code: 0,  isDay: true,  label: "0"   },
+            { code: 0,  isDay: false, label: "0n"  },
+            { code: 1,  isDay: true,  label: "1"   },
+            { code: 3,  isDay: true,  label: "3"   },
+            { code: 45, isDay: true,  label: "45"  },
+            { code: 61, isDay: true,  label: "61"  },
+            { code: 71, isDay: true,  label: "71"  },
+            { code: 95, isDay: true,  label: "95"  }
         ]
 
-        // The single row
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            spacing: 14
+            spacing: 2   // tight — close together so eye catches any height difference
 
             Repeater {
                 model: entries
                 delegate: ColumnLayout {
-                    Layout.preferredWidth: 96
-                    spacing: 2
+                    Layout.preferredWidth: 64
+                    spacing: 0
                     Layout.alignment: Qt.AlignHCenter
 
-                    // Code number (small, on top)
-                    PlasmaComponents.Label {
-                        Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignHCenter
-                        text: "code " + modelData.code + (modelData.isDay ? "" : "·")
-                        font.pointSize: Kirigami.Theme.smallFont.pointSize
-                        opacity: 0.5
-                    }
-
-                    // Icon box with center reference line
+                    // Icon box with center line
                     Item {
                         Layout.preferredWidth: 64
                         Layout.preferredHeight: 64
@@ -93,7 +72,6 @@ PlasmoidItem {
                             isDay: modelData.isDay
                         }
 
-                        // Red centerline reference
                         Rectangle {
                             anchors.left: parent.left
                             anchors.right: parent.right
@@ -106,38 +84,18 @@ PlasmoidItem {
                         }
                     }
 
-                    // Label below
                     PlasmaComponents.Label {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignHCenter
                         text: modelData.label
-                        font.bold: true
-                        font.pointSize: Kirigami.Theme.smallFont.pointSize
-                    }
-
-                    // vOffset value
-                    PlasmaComponents.Label {
-                        Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignHCenter
-                        text: "vOffset" + modelData.vOff
                         font.pointSize: Kirigami.Theme.smallFont.pointSize
                         opacity: 0.5
                     }
                 }
             }
         }
-
-        // Bottom note
-        PlasmaComponents.Label {
-            Layout.topMargin: 8
-            text: "↓ Look at the red line: every icon's visual center of mass should sit on it. ↓"
-            font.pointSize: Kirigami.Theme.smallFont.pointSize
-            opacity: 0.6
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-        }
     }
 
-    toolTipMainText: "Weather Icons Demo (horizontal)"
-    toolTipSubText: "Run with: plasmoidviewer -a ."
+    toolTipMainText: "Weather Icons Demo"
+    toolTipSubText: "Tight horizontal row, red center line on each"
 }
