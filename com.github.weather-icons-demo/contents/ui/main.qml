@@ -14,8 +14,8 @@ PlasmoidItem {
     }
 
     fullRepresentation: ColumnLayout {
-        Layout.preferredWidth: 720
-        Layout.minimumWidth: 720
+        Layout.preferredWidth: 800
+        Layout.minimumWidth: 800
         spacing: 6
         Layout.margins: 12
 
@@ -39,6 +39,7 @@ PlasmoidItem {
             { code: 0,  isDay: true,  label: "0"   },
             { code: 0,  isDay: false, label: "0n"  },
             { code: 1,  isDay: true,  label: "1"   },
+            { code: 1,  isDay: false, label: "1n"  },  // partly cloudy NIGHT (moon + cloud)
             { code: 3,  isDay: true,  label: "3"   },
             { code: 45, isDay: true,  label: "45"  },
             { code: 61, isDay: true,  label: "61"  },
