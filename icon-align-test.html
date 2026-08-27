@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Weather Icon Alignment — Before / After Offset</title>
+<style>
+  body {
+    background: #1e1e2e; color: #cdd6f4;
+    font-family: -apple-system, "Segoe UI", sans-serif;
+    margin: 0; padding: 24px;
+  }
+  h1 { margin: 0 0 4px; font-weight: 500; font-size: 18px; }
+  h2 { margin: 20px 0 8px; font-weight: 500; font-size: 14px; color: #f9e2af; }
+  .hint { color: #888; font-size: 12px; margin: 0 0 16px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cell { display: flex; flex-direction: column; align-items: center; }
+  .box {
+    width: 96px; height: 96px; background: #2a2a3e;
+    border: 1px dashed #555; position: relative;
+  }
+  .box svg { width: 96px; height: 96px; display: block; }
+  .centerline {
+    position: absolute; left: 0; right: 0; top: 50%;
+    height: 1px; background: #ff5555; opacity: 0.7; pointer-events: none;
+  }
+  .baseline {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1px; background: #55aaff; opacity: 0.4; pointer-events: none;
+  }
+  .code { font-size: 11px; color: #cdd6f4; margin-top: 4px; text-align: center; min-width: 80px; }
+</style>
+</head>
+<body>
+  <h1>Weather Icon — Before vs After vOffset</h1>
+  <p class="hint">
+    <b>Red line</b> = box vertical center (50%). All icon visual mass should sit on this line.<br>
+    <b>Left row</b> = original QML geometry (no offset).<br>
+    <b>Right row</b> = with the vOffset I added in AnimatedWeatherIcon.qml.<br>
+    Compare both rows — find which icon still doesn't sit centered in the right row.
+  </p>
+
+  <h2>BEFORE offset</h2>
+  <div class="row">
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(24.00,24.00)"><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(0)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(45)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(90)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(135)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(180)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(225)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(270)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(315)"/><circle r="12.50" fill="#FFB300"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">0 晴</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><circle cx="8.64" cy="7.199999999999999" r="1.1" fill="#E8F0FF"/><circle cx="33.599999999999994" cy="4.800000000000001" r="0.8" fill="#E8F0FF"/><circle cx="39.36" cy="19.200000000000003" r="1.0" fill="#E8F0FF"/><circle cx="5.76" cy="26.400000000000002" r="0.7" fill="#E8F0FF"/><g transform="translate(24.00,24.00)"><circle r="8.60" fill="#DDD8B0"/><circle r="6.70" cx="-3.0" fill="#1A2A3A"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">0 夜</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(31.44,15.12)"><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(0)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(45)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(90)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(135)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(180)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(225)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(270)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(315)"/><circle r="7.81" fill="#FFB300"/></g><rect x="2.36" y="34.42" width="34.64" height="12.14" rx="6.07" fill="#C0CCD8"/><circle cx="3.15" cy="31.30" r="7.87" fill="#C0CCD8"/><circle cx="14.17" cy="29.33" r="9.84" fill="#C8D4E0"/></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">1,2 多云白</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(32.16, 13.92)"><circle r="9" fill="#DDD8B0"/><circle r="7" cx="-3.3" fill="#1A2A3A"/></g><rect x="2.36" y="34.42" width="34.64" height="12.14" rx="6.07" fill="#707880"/><circle cx="3.15" cy="31.30" r="7.87" fill="#707880"/><circle cx="14.17" cy="29.33" r="9.84" fill="#787F88"/></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">1,2 多云夜</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><rect x="2.07" y="17.76" width="30.41" height="11.04" rx="5.52" fill="#8898A8"/><circle cx="2.76" cy="15.17" r="6.91" fill="#8898A8"/><circle cx="12.44" cy="13.44" r="8.64" fill="#8898A8"/><rect x="2.36" y="32.24" width="34.64" height="11.92" rx="5.96" fill="#68788A"/><circle cx="3.15" cy="29.03" r="7.87" fill="#68788A"/><circle cx="14.17" cy="27.06" r="9.84" fill="#707888"/></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">3 阴</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><rect x="0.96" y="9.600000000000001" width="33.599999999999994" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/><rect x="0.96" y="18.240000000000002" width="42.24" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/><rect x="0.96" y="26.880000000000003" width="36.0" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/><rect x="0.96" y="35.04" width="28.799999999999997" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">45,48 雾</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><rect x="2.53" y="14.88" width="37.17" height="11.04" rx="5.52" fill="#607080"/><circle cx="3.38" cy="10.75" r="8.45" fill="#607080"/><circle cx="15.21" cy="8.64" r="10.56" fill="#687888"/><rect x="8.64" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="18.24" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="27.84" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="36.48" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">51–82 雨</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><rect x="2.53" y="14.36" width="37.17" height="10.60" rx="5.30" fill="#7888A0"/><circle cx="3.38" cy="10.06" r="8.45" fill="#7888A0"/><circle cx="15.21" cy="7.95" r="10.56" fill="#8090A8"/><rect x="8.64" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/><rect x="19.20" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/><rect x="29.76" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/><rect x="38.40" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">56–86 雪</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><rect x="2.53" y="13.84" width="37.17" height="10.16" rx="5.08" fill="#485868"/><circle cx="3.38" cy="9.37" r="8.45" fill="#485868"/><circle cx="15.21" cy="7.26" r="10.56" fill="#506070"/><g transform="translate(20.16, 21.12)"><rect x="3.02" y="0" width="3.02" height="8.98" fill="#FFE040" transform="rotate(20, 3.02, 8.98)"/><rect x="0.86" y="7.18" width="3.02" height="8.98" fill="#FFE040" transform="rotate(20, 0.86, 7.18)"/></g><rect x="5.76" y="24.96" width="2.88" height="7.68" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="29.76" y="24.96" width="2.88" height="7.68" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="37.44" y="24.96" width="2.88" height="7.68" rx="1.44" fill="#6090C8" opacity="0.85"/></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">95–99 雷</div></div>
+    </div></div>
+
+  <h2>AFTER offset (current plasmoid behavior)</h2>
+  <div class="row">
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(24.00,24.00)"><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(0)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(45)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(90)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(135)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(180)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(225)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(270)"/><rect x="-1.50" y="-22.0" width="3.00" height="9.90" rx="1.50" fill="#FFB300" transform="rotate(315)"/><circle r="12.50" fill="#FFB300"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">0 晴</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><circle cx="8.64" cy="7.199999999999999" r="1.1" fill="#E8F0FF"/><circle cx="33.599999999999994" cy="4.800000000000001" r="0.8" fill="#E8F0FF"/><circle cx="39.36" cy="19.200000000000003" r="1.0" fill="#E8F0FF"/><circle cx="5.76" cy="26.400000000000002" r="0.7" fill="#E8F0FF"/><g transform="translate(24.00,24.00)"><circle r="8.60" fill="#DDD8B0"/><circle r="6.70" cx="-3.0" fill="#1A2A3A"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">0 夜</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(0,-3.840)"><g transform="translate(31.44,15.12)"><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(0)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(45)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(90)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(135)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(180)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(225)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(270)"/><rect x="-0.94" y="-13.75" width="1.88" height="6.19" rx="0.94" fill="#FFB300" transform="rotate(315)"/><circle r="7.81" fill="#FFB300"/></g><rect x="2.36" y="34.42" width="34.64" height="12.14" rx="6.07" fill="#C0CCD8"/><circle cx="3.15" cy="31.30" r="7.87" fill="#C0CCD8"/><circle cx="14.17" cy="29.33" r="9.84" fill="#C8D4E0"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">1,2 多云白</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(0,-3.840)"><g transform="translate(32.16, 13.92)"><circle r="9" fill="#DDD8B0"/><circle r="7" cx="-3.3" fill="#1A2A3A"/></g><rect x="2.36" y="34.42" width="34.64" height="12.14" rx="6.07" fill="#707880"/><circle cx="3.15" cy="31.30" r="7.87" fill="#707880"/><circle cx="14.17" cy="29.33" r="9.84" fill="#787F88"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">1,2 多云夜</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(0,-2.880)"><rect x="2.07" y="17.76" width="30.41" height="11.04" rx="5.52" fill="#8898A8"/><circle cx="2.76" cy="15.17" r="6.91" fill="#8898A8"/><circle cx="12.44" cy="13.44" r="8.64" fill="#8898A8"/><rect x="2.36" y="32.24" width="34.64" height="11.92" rx="5.96" fill="#68788A"/><circle cx="3.15" cy="29.03" r="7.87" fill="#68788A"/><circle cx="14.17" cy="27.06" r="9.84" fill="#707888"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">3 阴</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(0,0.960)"><rect x="0.96" y="9.600000000000001" width="33.599999999999994" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/><rect x="0.96" y="18.240000000000002" width="42.24" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/><rect x="0.96" y="26.880000000000003" width="36.0" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/><rect x="0.96" y="35.04" width="28.799999999999997" height="4.32" rx="2.16" fill="#A0B0C0" opacity="0.75"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">45,48 雾</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(0,2.880)"><rect x="2.53" y="14.88" width="37.17" height="11.04" rx="5.52" fill="#607080"/><circle cx="3.38" cy="10.75" r="8.45" fill="#607080"/><circle cx="15.21" cy="8.64" r="10.56" fill="#687888"/><rect x="8.64" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="18.24" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="27.84" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="36.48" y="25.92" width="2.88" height="8.64" rx="1.44" fill="#6090C8" opacity="0.85"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">51–82 雨</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(0,2.880)"><rect x="2.53" y="14.36" width="37.17" height="10.60" rx="5.30" fill="#7888A0"/><circle cx="3.38" cy="10.06" r="8.45" fill="#7888A0"/><circle cx="15.21" cy="7.95" r="10.56" fill="#8090A8"/><rect x="8.64" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/><rect x="19.20" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/><rect x="29.76" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/><rect x="38.40" y="24.96" width="4.80" height="4.80" rx="2.40" fill="#C0D8F0" opacity="0.85"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">56–86 雪</div></div>
+    </div>
+    <div class="cell">
+      <div class="box">
+        <svg viewBox="0 0 48 48" preserveAspectRatio="xMidYMid meet"><g transform="translate(0,2.880)"><rect x="2.53" y="13.84" width="37.17" height="10.16" rx="5.08" fill="#485868"/><circle cx="3.38" cy="9.37" r="8.45" fill="#485868"/><circle cx="15.21" cy="7.26" r="10.56" fill="#506070"/><g transform="translate(20.16, 21.12)"><rect x="3.02" y="0" width="3.02" height="8.98" fill="#FFE040" transform="rotate(20, 3.02, 8.98)"/><rect x="0.86" y="7.18" width="3.02" height="8.98" fill="#FFE040" transform="rotate(20, 0.86, 7.18)"/></g><rect x="5.76" y="24.96" width="2.88" height="7.68" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="29.76" y="24.96" width="2.88" height="7.68" rx="1.44" fill="#6090C8" opacity="0.85"/><rect x="37.44" y="24.96" width="2.88" height="7.68" rx="1.44" fill="#6090C8" opacity="0.85"/></g></svg>
+        <div class="centerline"></div>
+        <div class="baseline"></div>
+      </div>
+      <div class="meta"><div class="code">95–99 雷</div></div>
+    </div></div>
+</body>
+</html>

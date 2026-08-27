@@ -21,9 +21,9 @@ Item {
         if (c === 45 || c === 48) return height * 0.02   // fog: bars at y=20-73 (slightly high)
         // Rain/snow/storm: cloud at TOP (y=4-54), drops at y=52-90. Visual
         // mass is upper-half; shift DOWN so cloud centerline lands near 50%.
-        if (c >= 51 && c <= 82) return height * 0.06    // rain
-        if (c >= 56 && c <= 86) return height * 0.06    // snow
-        if (c >= 95 && c <= 99) return height * 0.06    // storm
+        if (c >= 51 && c <= 82) return height * 0.16    // rain (was 0.06; +10% as requested)
+        if (c >= 56 && c <= 86) return height * 0.16    // snow (was 0.06; +10% as requested)
+        if (c >= 95 && c <= 99) return height * 0.16    // storm (was 0.06; +10% as requested)
         return 0
     }
 
