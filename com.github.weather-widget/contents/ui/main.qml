@@ -282,15 +282,17 @@ PlasmoidItem {
                             : ""
                         opacity: 0.7
                     }
+                    // Feels like lives directly under the description, no longer
+                    // a stand-alone centered row.
+                    PlasmaComponents.Label {
+                        text: root.weatherData && root.weatherData.current
+                            ? "Feels like " + Math.round(root.weatherData.current.apparent_temperature) + "°C"
+                            : ""
+                        opacity: 0.6
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        Layout.topMargin: Kirigami.Units.smallSpacing / 2
+                    }
                 }
-            }
-
-            PlasmaComponents.Label {
-                text: root.weatherData && root.weatherData.current
-                    ? "Feels like " + Math.round(root.weatherData.current.apparent_temperature) + "°C"
-                    : ""
-                opacity: 0.6
-                Layout.alignment: Qt.AlignHCenter
             }
 
             Rectangle {
@@ -337,27 +339,11 @@ PlasmoidItem {
                     }
                 }
 
-                // Pressure (barometer)
+                // Precipitation (umbrella — semantic, always present in Breeze)
                 RowLayout {
                     spacing: Kirigami.Units.smallSpacing
                     Kirigami.Icon {
-                        source: "barometer"
-                        Layout.preferredWidth: Kirigami.Units.iconSizes.small
-                        Layout.preferredHeight: Kirigami.Units.iconSizes.small
-                    }
-                    PlasmaComponents.Label {
-                        text: (root.weatherData && root.weatherData.current
-                              && root.weatherData.current.surface_pressure !== undefined)
-                            ? Math.round(root.weatherData.current.surface_pressure) + " hPa" : ""
-                        opacity: 0.8
-                    }
-                }
-
-                // Precipitation (umbrella icon)
-                RowLayout {
-                    spacing: Kirigami.Units.smallSpacing
-                    Kirigami.Icon {
-                        source: "weather-showers-scattered"
+                        source: "umbrella"
                         Layout.preferredWidth: Kirigami.Units.iconSizes.small
                         Layout.preferredHeight: Kirigami.Units.iconSizes.small
                     }
@@ -365,6 +351,22 @@ PlasmoidItem {
                         text: (root.weatherData && root.weatherData.current
                               && root.weatherData.current.precipitation !== undefined)
                             ? root.weatherData.current.precipitation.toFixed(1) + " mm" : ""
+                        opacity: 0.8
+                    }
+                }
+
+                // Pressure (custom drawn barometer — no icon-theme dependency)
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+                    BarometerIcon {
+                        Layout.preferredWidth: Kirigami.Units.iconSizes.small
+                        Layout.preferredHeight: Kirigami.Units.iconSizes.small
+                        iconColor: Kirigami.Theme.textColor
+                    }
+                    PlasmaComponents.Label {
+                        text: (root.weatherData && root.weatherData.current
+                              && root.weatherData.current.surface_pressure !== undefined)
+                            ? Math.round(root.weatherData.current.surface_pressure) + " hPa" : ""
                         opacity: 0.8
                     }
                 }
@@ -421,10 +423,11 @@ PlasmoidItem {
                                       && root.weatherData.hourly.weather_code[hourCol.hourIndex] !== undefined)
                             ? root.weatherData.hourly.weather_code[hourCol.hourIndex] : 0
                         isDay: root.isDay
-                        width: Kirigami.Units.iconSizes.smallMedium
-                        height: Kirigami.Units.iconSizes.smallMedium
-                        Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
-                        Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+                        // +20% over default smallMedium so the icons read clearly
+                        width: Kirigami.Units.iconSizes.smallMedium * 1.2
+                        height: Kirigami.Units.iconSizes.smallMedium * 1.2
+                        Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium * 1.2
+                        Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium * 1.2
                         Layout.alignment: Qt.AlignHCenter
                     }
 
