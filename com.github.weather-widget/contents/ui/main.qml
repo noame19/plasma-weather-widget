@@ -176,7 +176,7 @@ PlasmoidItem {
             + "&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m,apparent_temperature,surface_pressure,precipitation"
             + "&hourly=temperature_2m,weather_code,precipitation_probability"
             + "&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,precipitation_probability_max"
-            + "&forecast_days=5"
+            + "&forecast_days=6"
             + "&timezone=auto"
         executable.exec("curl -s '" + url + "'")
     }
@@ -219,8 +219,8 @@ PlasmoidItem {
 
     // --- Full (popup) representation ---
     fullRepresentation: ColumnLayout {
-        Layout.preferredWidth: Kirigami.Units.gridUnit * 16
-        Layout.minimumWidth: Kirigami.Units.gridUnit * 14
+        Layout.preferredWidth: Kirigami.Units.gridUnit * 18
+        Layout.minimumWidth: Kirigami.Units.gridUnit * 16
         spacing: Kirigami.Units.largeSpacing
 
         PlasmaComponents.Label {
@@ -392,8 +392,8 @@ PlasmoidItem {
                         var now = new Date()
                         return now.getHours() + 1 + index
                     }
-                    Layout.preferredWidth: Kirigami.Units.gridUnit * 2.6
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 2.6
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 3
+                    Layout.maximumWidth: Kirigami.Units.gridUnit * 3
                     spacing: Kirigami.Units.smallSpacing / 2
 
                     // Hour label (e.g. "3 PM")
