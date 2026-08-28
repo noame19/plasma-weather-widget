@@ -507,6 +507,21 @@ PlasmoidItem {
                         elide: Text.ElideRight
                     }
 
+                    // Small MM-DD date below the day name (no year)
+                    PlasmaComponents.Label {
+                        text: {
+                            if (!root.weatherData || !root.weatherData.daily
+                                || !root.weatherData.daily.time[index]) return ""
+                            var d = root.weatherData.daily.time[index]  // "2026-08-28"
+                            return d.substring(5, 7) + "-" + d.substring(8, 10)  // "08-28"
+                        }
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.85
+                        opacity: 0.5
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignHCenter
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+
                     // Forecast icons — animated, always day variant
                     AnimatedWeatherIcon {
                         weatherCode: root.weatherData
