@@ -1,0 +1,5 @@
+# Dev/test artifacts — not part of the shipped widget
+com.github.weather-icons-demo/
+icon-align-test.html
+icon-align-test.png
+*.tmp
