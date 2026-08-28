@@ -517,7 +517,7 @@ PlasmoidItem {
                         }
                         font.pointSize: Kirigami.Theme.smallFont.pointSize
                         font.bold: true
-                        opacity: 0.7
+                        opacity: 0.5
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         horizontalAlignment: Text.AlignHCenter
