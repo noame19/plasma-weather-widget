@@ -447,7 +447,7 @@ PlasmoidItem {
                         horizontalAlignment: Text.AlignHCenter
                     }
 
-                    // Rain probability (subtle)
+                    // Rain probability (subtle) — shifted left 2px to align with the rows above
                     PlasmaComponents.Label {
                         text: (root.weatherData && root.weatherData.hourly
                                && root.weatherData.hourly.precipitation_probability
@@ -460,6 +460,7 @@ PlasmoidItem {
                         Layout.alignment: Qt.AlignHCenter
                         horizontalAlignment: Text.AlignHCenter
                         opacity: 0.5
+                        transform: Translate { x: -2 }
                     }
                 }
             }
