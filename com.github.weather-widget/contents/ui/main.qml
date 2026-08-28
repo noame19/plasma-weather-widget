@@ -543,7 +543,7 @@ PlasmoidItem {
                             var lo = Math.round(root.weatherData.daily.temperature_2m_min[index])
                             return hi + "°/" + lo + "°"
                         }
-                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.9
                         font.bold: true
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
@@ -557,7 +557,7 @@ PlasmoidItem {
                                && root.weatherData.daily.precipitation_probability_max[index] !== undefined)
                             ? root.weatherData.daily.precipitation_probability_max[index] + "%"
                             : ""
-                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.9
                         font.bold: true
                         opacity: 0.5
                         Layout.fillWidth: true
