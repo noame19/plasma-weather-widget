@@ -507,7 +507,7 @@ PlasmoidItem {
                         elide: Text.ElideRight
                     }
 
-                    // Small MM-DD date below the day name (no year)
+                    // MM-DD date below the day name (no year) — bolder for readability
                     PlasmaComponents.Label {
                         text: {
                             if (!root.weatherData || !root.weatherData.daily
@@ -515,8 +515,9 @@ PlasmoidItem {
                             var d = root.weatherData.daily.time[index]  // "2026-08-28"
                             return d.substring(5, 7) + "-" + d.substring(8, 10)  // "08-28"
                         }
-                        font.pointSize: Kirigami.Theme.smallFont.pointSize * 0.85
-                        opacity: 0.5
+                        font.pointSize: Kirigami.Theme.smallFont.pointSize
+                        font.bold: true
+                        opacity: 0.7
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         horizontalAlignment: Text.AlignHCenter
